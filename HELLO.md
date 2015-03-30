@@ -5,7 +5,7 @@
 
 I made some things. Hope you like them!
 
-[Have a gif](http://i.imgur.com/CBZf07H.gif)
+![Have a gif](http://i.imgur.com/CBZf07H.gif)
 
 ## Changes Made
 
