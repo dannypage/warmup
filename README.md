@@ -10,7 +10,7 @@ Unlike that nonsense, this warmup intends to gauge how well you know your way ar
 
 So chillax take your time and do your thing. You are encouraged to use ***ANY*** resources (gems, JavaScript libraries, StackOverflow) to make your life easier.
 
-Feel free to send any questions to the same email listed above. 
+Feel free to send any questions to the same email listed above.
 
 ## Getting Started
 
@@ -39,7 +39,7 @@ The training load for a day is the sum of all training loads for that day.
 
 Say I run for an hour, and I rate it at a difficulty of 3. Then I lift weights for 20 minutes and rate it at a difficulty of 10. My training load for the day would be calculated as follows:
 
-    Day's Training Load = (60 * 3) + (20 * 10) = 480
+    Day's Training Load = (60 * 3) + (20 * 10) = 380
 
 ### Training Load Residuals
 
@@ -55,11 +55,11 @@ Say we have the following training loads:
 
 | ***Day***  | Day 1   | Day 2 | Day 3  | "Today" |
 |------------|---------|-------|--------|---------|
-| ***Load*** | 1000    | 740   | 100    | 300     | 
+| ***Load*** | 1000    | 740   | 100    | 300     |
 
 You can determine the following residuals by looking at the corresponding residual factor from the table as follows:
 
-| Load Range       | 1 Day Prior | 2 Days Prior | 3 Days Prior | 
+| Load Range       | 1 Day Prior | 2 Days Prior | 3 Days Prior |
 |------------------|-------------|--------------|--------------|
 | 750+ (inclusive) | 0.40        | 0.20         | **0.10**     |
 | [250, 750)       | 0.30        | **0.15**     | 0.05         |
@@ -67,7 +67,7 @@ You can determine the following residuals by looking at the corresponding residu
 
 Then multiply those residual factors by the training load for the corresponding day:
 
-| *Day*                           | Day 1 | Day 2  | Day 3  | "Today" | 
+| *Day*                           | Day 1 | Day 2  | Day 3  | "Today" |
 |---------------------------------|-------|--------|--------|---------|
 | ***Load***                      | 1000  | 740    | 100    | 300     |
 | ***RFactor***                   | 0.10  | 0.15   | 0.20   | N/A     |
@@ -89,7 +89,7 @@ Currently you're provided the following models:
  - `Player`
  - `TrainingLoad`
 
-where `Player` has many `TrainingLoad`s. Data has already been such that players have data from 2015-01-25 to 2015-01-16. You may assume any days missing a training load were off days.
+where `Player` has many `TrainingLoad`s. Data has already been such that players have data from 2015-01-25 to 2015-03-16. You may assume any days missing a training load were off days.
 
  1. Fill in the "Days to Recovery" column of the overview table in the dashboard with the number of days it'll take for the players perceived load to return to zero.
  2. Create a route with the format `/players/:player_id/training_loads` that charts the actual training loads for each date as bars against the perceived loads for each date as a line. Be sure to chart the perceived load far enough into the future to include their recovery dates (i.e. to each players zero point.) Link to each players chart page from the overview table in the dashboard.
