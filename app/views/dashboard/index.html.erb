@@ -21,8 +21,8 @@
         <td><%= player.last_name %></td>
         <td><%= load_sparkline(player) %></td>
         <td><%= player.training_loads.where(date: date).first.value %></td>
-        <td>TODO</td>
-        <td><a href="#TODO">Chart &raquo;</a></td>
+        <td><%= player.recovery_days %></td>
+        <td><%= link_to "Chart »", player_training_load_path(player.id) %></td>
       </tr>
     <% end %>
   </tbody>
