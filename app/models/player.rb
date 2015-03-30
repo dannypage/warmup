@@ -19,4 +19,9 @@ class Player < ActiveRecord::Base
   def last_7_training_loads
     training_loads.order_by_date.last(7)
   end
+
+  def recovery_days
+    99
+  end
+
 end

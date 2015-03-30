@@ -24,9 +24,10 @@ I made some things. Hope you like them!
   - Calculate This Number
   - Populate it in the table
  2. Feature: Individual Player History Charts
-  - Create route `/players/:player_id/training_loads` charts the actual training loads for each date as bars against the perceived loads for each date as a line.
+  - Create route `/players/:player_id/training_loads` -- *done*
+  - Chart the actual training loads for each date as bars against the perceived loads for each date as a line.
   - Be sure to chart the perceived load far enough into the future to include their recovery dates (i.e. to each players zero point.)
-  - Link to each players chart page from the overview table in the dashboard.
+  - Link to each players chart page from the overview table in the dashboard. -- *done*
  3. Feature: The method used to determine the residuals above with respect to the training load is piecewise.
   - Devise a better strategy to determine the residual value for a given training load based on the provided table.- Devise a way to easily toggle between these strategies from within your code
   - document how to make that change in your hello file.
