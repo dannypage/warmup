@@ -1,1 +1,28 @@
-<p>Hello.</p>
+<% content_for :javascript do %>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+          // Some raw data (not necessarily accurate)
+          var js_array = <%= raw @chart.to_json %>;
+
+          var data = google.visualization.arrayToDataTable(js_array);
+
+          var options = {
+              title : "<%= "Training Load for #{@player}" %>",
+              vAxis: {title: "Load"},
+              hAxis: {title: "Day"},
+              seriesType: "bars",
+              series: {1: {type: "line"}}
+          };
+
+          var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+          chart.draw(data, options);
+      }
+  </script>
+<% end %>
+
+    <div id="back_link"><%= link_to "Back to Dashboard", root_path %></div>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>

@@ -13,27 +13,29 @@ I made some things. Hope you like them!
 ### Features Implemented
 
  - GIF added.
- -
+ - Charting an individual's history of loads.
 
 ### Fixes:
  - Typo in README.md concerning dates and training load data
  - Moved the Training Loads per date call to the model and made sure it gave all the trainings, not just one.
- - Fixed the shape of the sparkline.
+ - Fixed the shape of the sparkline. Fixed the values in the sparkline.
+ - Days to recovery filled in.
 
 ## TODO List
 
  0. Feature: An animated GIF in your hello file -- *done*
  1. Fix: Fill in the "Days to Recovery" column of the overview table in the dashboard with the number of days it'll take for the players perceived load to return to zero.
-  - Calculate This Number
-  - Populate it in the table
+  - Calculate This Number -- *done*
+  - Populate it in the table -- *done*
  2. Feature: Individual Player History Charts
   - Create route `/players/:player_id/training_loads` -- *done*
-  - Chart the actual training loads for each date as bars against the perceived loads for each date as a line.
-  - Be sure to chart the perceived load far enough into the future to include their recovery dates (i.e. to each players zero point.)
+  - Chart the actual training loads for each date as bars against the perceived loads for each date as a line. -- *done*
+  - Be sure to chart the perceived load far enough into the future to include their recovery dates (i.e. to each players zero point.) -- *done*
   - Link to each players chart page from the overview table in the dashboard. -- *done*
  3. Feature: The method used to determine the residuals above with respect to the training load is piecewise.
-  - Devise a better strategy to determine the residual value for a given training load based on the provided table.- Devise a way to easily toggle between these strategies from within your code
-  - document how to make that change in your hello file.
+  - Devise a better strategy to determine the residual value for a given training load based on the provided table.
+  - Devise a way to easily toggle between these strategies from within your code
+  - Document how to make that change in your hello file.
  4. Fix: The sparkline charts on the dashboard are very, very wrong. Fix 'em. -- *Fixed heights. Values fixed.*
  5. Fix: The dashboard can load much faster. Use the profiler (top left corner) to diagnose the problem.
  6. Fix: `player.training_loads.where(date: date).first.value` in `app/views/dashboard/index.html.erb` -- *done*

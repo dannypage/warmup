@@ -1,6 +1,7 @@
 class PlayersController < ApplicationController
 
   def training_loads
-    @player = Player.where(id: params[:player_id])
+    @player = Player.find(params['player_id'])
+    @chart = @player.chart
   end
 end

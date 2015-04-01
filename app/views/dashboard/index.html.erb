@@ -21,7 +21,7 @@
         <td><%= player.last_name %></td>
         <td><%= load_sparkline(player, date) %></td>
         <td><%= player.day_load(date) %></td>
-        <td><%= player.recovery_days %></td>
+        <td><%= player.recovery_days(date) %></td>
         <td><%= link_to "Chart »", player_training_load_path(player.id) %></td>
       </tr>
     <% end %>
