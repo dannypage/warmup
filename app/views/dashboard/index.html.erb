@@ -10,7 +10,7 @@
       <th>Sparkline</th>
       <th>Today</th>
       <th>Days to Recovery</th>
-      <th></th>
+      <th>Player's Chart</th>
     </tr>
   </thead>
 
@@ -20,7 +20,7 @@
         <td><%= player.first_name %></td>
         <td><%= player.last_name %></td>
         <td><%= load_sparkline(player) %></td>
-        <td><%= player.training_loads.where(date: date).first.value %></td>
+        <td><%= player.day_load(date) %></td>
         <td><%= player.recovery_days %></td>
         <td><%= link_to "Chart »", player_training_load_path(player.id) %></td>
       </tr>

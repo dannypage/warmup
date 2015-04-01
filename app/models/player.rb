@@ -24,4 +24,12 @@ class Player < ActiveRecord::Base
     99
   end
 
+  def day_load(date)
+    training_loads.where(date: date).map(&:value).reduce(:+)
+  end
+
+  def to_s
+    full_name
+  end
+
 end
