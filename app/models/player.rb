@@ -16,8 +16,9 @@ class Player < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def last_7_training_loads
-    training_loads.order_by_date.last(7)
+  def last_7_training_loads(date)
+    start = date - 6.days
+    (start..date).map {|day| day_load(day)}
   end
 
   def recovery_days
@@ -25,7 +26,7 @@ class Player < ActiveRecord::Base
   end
 
   def day_load(date)
-    training_loads.where(date: date).map(&:value).reduce(:+)
+    training_loads.where(date: date).map(&:value).reduce(0, :+)
   end
 
   def to_s

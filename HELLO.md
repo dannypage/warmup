@@ -13,9 +13,12 @@ I made some things. Hope you like them!
 ### Features Implemented
 
  - GIF added.
+ -
 
 ### Fixes:
  - Typo in README.md concerning dates and training load data
+ - Moved the Training Loads per date call to the model and made sure it gave all the trainings, not just one.
+ - Fixed the shape of the sparkline.
 
 ## TODO List
 
@@ -31,6 +34,6 @@ I made some things. Hope you like them!
  3. Feature: The method used to determine the residuals above with respect to the training load is piecewise.
   - Devise a better strategy to determine the residual value for a given training load based on the provided table.- Devise a way to easily toggle between these strategies from within your code
   - document how to make that change in your hello file.
- 4. Fix: The sparkline charts on the dashboard are very, very wrong. Fix 'em. -- *Fixed heights. Check values.*
+ 4. Fix: The sparkline charts on the dashboard are very, very wrong. Fix 'em. -- *Fixed heights. Values fixed.*
  5. Fix: The dashboard can load much faster. Use the profiler (top left corner) to diagnose the problem.
- 6. Fix: `player.training_loads.where(date: date).first.value` in `app/views/dashboard/index.html.erb`
+ 6. Fix: `player.training_loads.where(date: date).first.value` in `app/views/dashboard/index.html.erb` -- *done*

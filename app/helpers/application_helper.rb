@@ -1,7 +1,7 @@
 module ApplicationHelper
-  def load_sparkline(player)
+  def load_sparkline(player, date)
     max_spark_height = 30
-    load_values = player.last_7_training_loads.map(&:value)
+    load_values = player.last_7_training_loads(date)
     max_value = load_values.max
     lines = load_values.map { |value|
       pixels = (( value.to_f / max_value) * max_spark_height ).round
