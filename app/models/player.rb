@@ -21,7 +21,7 @@ class Player < ActiveRecord::Base
     (start..date).map {|day| day_load(day)}
   end
 
-  def chart
+  def piecewise_chart
     chart = [['Day', 'Today', 'Residual']]
     date_start = Date.parse("2015-01-25")
     date_end = Date.parse("2015-03-20")
@@ -30,6 +30,10 @@ class Player < ActiveRecord::Base
     end
 
     chart
+  end
+
+  def sore_chart
+    [{}]
   end
 
   def recovery_days(date)
