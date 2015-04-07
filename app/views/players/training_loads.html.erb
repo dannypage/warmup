@@ -7,9 +7,9 @@
       function drawVisualization() {
           // Some raw data (not necessarily accurate)
           var pw_js_array = <%= raw @pw_chart.to_json %>;
-          var pw_data = google.visualization.arrayToDataTable(js_array);
+          var pw_data = google.visualization.arrayToDataTable(pw_js_array);
           var pw_options = {
-              title : "<%= "Training Load for #{@player}" %>",
+              title : "<%= "Piecewise Training Load for #{@player}" %>",
               vAxis: {title: "Load"},
               hAxis: {title: "Day"},
               seriesType: "bars",
@@ -18,6 +18,16 @@
 
           var chart_piecewise = new google.visualization.ComboChart(document.getElementById('chart_piecewise'));
           chart_piecewise.draw(pw_data, pw_options);
+
+          var sore_js_array = <%= raw @sore_chart.to_json %>;
+          var sore_data = google.visualization.arrayToDataTable(sore_js_array);
+          var sore_options = {
+              title : "<%= "Soreness Load for #{@player}" %>",
+              vAxis: {title: "Load"},
+              hAxis: {title: "Day"},
+              seriesType: "bars",
+              series: {1: {type: "line"}}
+          };
           var chart_soreness = new google.visualization.StackedBarChart(document.getElementById('chart_soreness'));
           chart_soreness.draw(data, options);
       }

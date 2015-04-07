@@ -33,7 +33,12 @@ class Player < ActiveRecord::Base
   end
 
   def sore_chart
-    [{}]
+    chart = [['Day', 'Today', 'Soreness']]
+    date_start = Date.parse("2015-01-25")
+    date_end = Date.parse("2015-03-24")
+    (date_start..date_end).each do |day|
+      chart.append([day, day_load(day), soreness(day) ])
+    end
   end
 
   def recovery_days(date)
@@ -64,6 +69,15 @@ class Player < ActiveRecord::Base
     residual = day0 + day1 + day2 + day3
 
     {:day3 => day3, :day2 => day2, :day1 => day1, :day0 => day0, :residual => residual}
+  end
+
+  def soreness(date)
+    #todo do between measure
+    #Days -2 through -5
+    sore = training_loads.where(date: date).map(&:value).reduce(0, :+) * 0.1
+    #Days -1
+    sore += training_loads.where(date: date).map(&:value).reduce(0, :+) * 0.4
+    sore
   end
 
   def day_load(date)
