@@ -1,52 +1,55 @@
 <% content_for :javascript do %>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawVisualization);
+    <script type="text/javascript">google.load("visualization", "1", {packages: ["corechart"]});</script>
+    <script type="text/javascript">
 
-      function drawVisualization() {
-          // Some raw data (not necessarily accurate)
-          var pw_js_array = <%= raw @pw_chart.to_json %>;
-          var pw_data = google.visualization.arrayToDataTable(pw_js_array);
-          var pw_options = {
-              title : "<%= "Piecewise Training Load for #{@player}" %>",
-              vAxis: {title: "Load"},
-              hAxis: {title: "Day"},
-              seriesType: "bars",
-              series: {1: {type: "line"}}
-          };
+        function drawVisualization() {
+            // Some raw data (not necessarily accurate)
+            var pw_js_array = <%= raw @pw_chart.to_json %>;
+            var pw_data = google.visualization.arrayToDataTable(pw_js_array);
+            var pw_options = {
+                title: "<%= "Piecewise Training Load for #{@player}" %>",
+                vAxis: {title: "Load"},
+                hAxis: {title: "Day"},
+                seriesType: "bars",
+                series: {1: {type: "line"}}
+            };
 
-          var chart_piecewise = new google.visualization.ComboChart(document.getElementById('chart_piecewise'));
-          chart_piecewise.draw(pw_data, pw_options);
+            var chart_piecewise = new google.visualization.ComboChart(document.getElementById('chart_piecewise'));
+            chart_piecewise.draw(pw_data, pw_options);
 
-          var sore_js_array = <%= raw @sore_chart.to_json %>;
-          var sore_data = google.visualization.arrayToDataTable(sore_js_array);
-          var sore_options = {
-              title : "<%= "Soreness Load for #{@player}" %>",
-              vAxis: {title: "Load"},
-              hAxis: {title: "Day"},
-              seriesType: "bars",
-              series: {1: {type: "line"}}
-          };
-          var chart_soreness = new google.visualization.StackedBarChart(document.getElementById('chart_soreness'));
-          chart_soreness.draw(data, options);
-      }
-  </script>
+            var sore_js_array = <%= raw @sore_chart.to_json %>;
+            var sore_data = google.visualization.arrayToDataTable(sore_js_array);
+            var sore_options = {
+                title: "<%= "Soreness Load for #{@player}" %>",
+                vAxis: {title: "Load"},
+                hAxis: {type: "date", slantedText: true, showTextEvery: 7},
+                colors: ['red','yellow','green'],
+                width: 900,
+                height: 500,
+                isStacked: true
+            };
+            var chart_soreness = new google.visualization.ColumnChart(document.getElementById('chart_soreness'));
+            chart_soreness.draw(sore_data, sore_options);
+        }
+
+        google.setOnLoadCallback(drawVisualization);
+
+    </script>
 <% end %>
 
-    <div id="back_link"><%= link_to "Back to Dashboard", root_path %></div>
-    <div id="charts">
-      <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-        <li class="active"><a href="#piecewise" data-toggle="tab">Piecewise</a></li>
-        <li><a href="#soreness" data-toggle="tab">Soreness Measure</a></li>
-      </ul>
-      <div id="tabs-content" class="tab-content">
-        <div class="tab-pane active" id="piecewise">
-            <div id="chart_piecewise" style="width: 900px; height: 500px;"></div>
+<div id="back_link"><%= link_to "Back to Dashboard", root_path %></div>
+<div id="charts">
+  <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+    <li class="active"><a href="#piecewise" data-toggle="tab">Piecewise</a></li>
+    <li><a href="#soreness" data-toggle="tab">Soreness Measure</a></li>
+  </ul>
+  <div id="tabs-content" class="tab-content">
+    <div class="tab-pane active" id="piecewise">
+      <div id="chart_piecewise" style="width: 900px; height: 500px;"></div>
     </div>
     <div class="tab-pane" id="soreness">
-        <div id="chart_soreness" style="width: 900px; height: 500px;"></div>
-
+      <div id="chart_soreness" style="width: 900px; height: 500px;"></div>
     </div>
   </div>
 </div>

@@ -22,9 +22,9 @@ class Player < ActiveRecord::Base
   end
 
   def piecewise_chart
-    chart = [['Day', 'Today', 'Residual']]
-    date_start = Date.parse("2015-01-25")
-    date_end = Date.parse("2015-03-20")
+    chart = [%w(Day Today Perceived)]
+    date_start = Date.parse('2015-01-25')
+    date_end = Date.parse('2015-03-20')
     (date_start..date_end).each do |day|
       chart.append([day, day_load(day), residual(day)[:residual] ])
     end
@@ -33,12 +33,15 @@ class Player < ActiveRecord::Base
   end
 
   def sore_chart
-    chart = [['Day', 'Today', 'Soreness']]
-    date_start = Date.parse("2015-01-25")
-    date_end = Date.parse("2015-03-24")
+    chart = [%w(Day Explicit Implicit Today)]
+    date_start = Date.parse('2015-01-25')
+    date_end = Date.parse('2015-03-24')
     (date_start..date_end).each do |day|
-      chart.append([day, day_load(day), soreness(day) ])
+      sore_hash = soreness(day)
+      chart.append([day, sore_hash[:explicit], soreness(day)[:implicit], day_load(day)])
     end
+
+    chart
   end
 
   def recovery_days(date)
@@ -46,14 +49,14 @@ class Player < ActiveRecord::Base
 
     if residual_loads[:residual] == 0
       return 0
-    elsif (residual_breakdown(residual_loads[:day2], "day3") +
-           residual_breakdown(residual_loads[:day1], "day2") +
-           residual_breakdown(residual_loads[:day0], "day1") ) == 0
+    elsif (residual_breakdown(residual_loads[:day2], 'day3') +
+           residual_breakdown(residual_loads[:day1], 'day2') +
+           residual_breakdown(residual_loads[:day0], 'day1') ) == 0
       return 1
-    elsif (residual_breakdown(residual_loads[:day1], "day3") +
-           residual_breakdown(residual_loads[:day0], "day2") ) == 0
+    elsif (residual_breakdown(residual_loads[:day1], 'day3') +
+           residual_breakdown(residual_loads[:day0], 'day2') ) == 0
       return 2
-    elsif residual_breakdown(residual_loads[:day0], "day3") == 0
+    elsif residual_breakdown(residual_loads[:day0], 'day3') == 0
       return 3
     else
       return 4
@@ -62,9 +65,9 @@ class Player < ActiveRecord::Base
   end
 
   def residual(date)
-    day3 = residual_breakdown(day_load(date - 3.days), "day3")
-    day2 = residual_breakdown(day_load(date - 2.days), "day2")
-    day1 = residual_breakdown(day_load(date - 1.days), "day1")
+    day3 = residual_breakdown(day_load(date - 3.days), 'day3')
+    day2 = residual_breakdown(day_load(date - 2.days), 'day2')
+    day1 = residual_breakdown(day_load(date - 1.days), 'day1')
     day0 = day_load(date)
     residual = day0 + day1 + day2 + day3
 
@@ -72,12 +75,15 @@ class Player < ActiveRecord::Base
   end
 
   def soreness(date)
-    #todo do between measure
-    #Days -2 through -5
-    sore = training_loads.where(date: date).map(&:value).reduce(0, :+) * 0.1
-    #Days -1
-    sore += training_loads.where(date: date).map(&:value).reduce(0, :+) * 0.4
-    sore
+    start = date - 4.days
+    finish = date - 2.days
+    implicit_soreness = (start..finish).map {|day| day_load(day)}.reduce(0,:+)*0.1
+    explicit_soreness = day_load(date - 1.day)*0.4
+    
+    soreness = {
+        :implicit => implicit_soreness,
+        :explicit => explicit_soreness
+    }
   end
 
   def day_load(date)
@@ -93,7 +99,7 @@ class Player < ActiveRecord::Base
   def residual_breakdown(load, day)
 
     case day
-      when "day3"
+      when 'day3'
         if load > 750
           return load*0.1
         elsif load > 250
@@ -101,7 +107,7 @@ class Player < ActiveRecord::Base
         else
           return 0
         end
-      when "day2"
+      when 'day2'
         if load > 750
           return load*0.2
         elsif load > 250
@@ -109,7 +115,7 @@ class Player < ActiveRecord::Base
         else
           return load*0.1
         end
-      when "day1"
+      when 'day1'
         if load > 750
           return load*0.4
         elsif load > 250
